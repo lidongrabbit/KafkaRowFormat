@@ -165,17 +165,14 @@ object StreamApp extends Logging {
     logInfo("------4.2 流出区域按竖线拆分多行...")
 
     val IMSI = inputArray(0)
-    val TIMESTAMP = inputArray(1)
-    //信令中的UTC时间戳
-    // 流出
-    val OUT_REGION = inputArray(30)
-    //流出区域编码（多个区域以|分隔）
-    val OUT_REGION_IN_DT = inputArray(31)
-    //流出区域的流入时间（多个流入时间以|分隔）
-    val OUT_REGION_OUT_DT = inputArray(32)
-    //流出区域的流出时间（多个流出时间以|分隔）
-    val OUT_REGION_STAY = inputArray(33)
-    //流出区域的驻留时长（多个驻留以|分隔）
+    val TIMESTAMP = inputArray(1) // 信令中的UTC时间戳
+    val OUT_REGION = inputArray(30) // 流出区域编码（多个区域以|分隔）
+    val OUT_REGION_IN_DT = inputArray(31) // 流出区域的流入时间（多个流入时间以|分隔）
+    val OUT_REGION_OUT_DT = inputArray(32) // 流出区域的流出时间（多个流出时间以|分隔）
+    val OUT_REGION_STAY = inputArray(33) // 流出区域的驻留时长（多个驻留以|分隔）
+    val OUT_CITY_CODE = inputArray(24) // 流出基站归属地市
+    val OUT_COUNTY_CODE	= inputArray(25) // 流出基站归属区县
+
     val builder_out = new mutable.StringBuilder()
     val outRegionArray = OUT_REGION.split("\\|")
     val inTimeArray = OUT_REGION_IN_DT.split("\\|")
@@ -187,7 +184,9 @@ object StreamApp extends Logging {
       builder_out.append(TIMESTAMP).append(separator_column_field)
       builder_out.append(inTimeArray(i)).append(separator_column_field)
       builder_out.append(outTimeArray(i)).append(separator_column_field)
-      builder_out.append(stayArray(i))
+      builder_out.append(stayArray(i)).append(separator_column_field)
+      builder_out.append(OUT_CITY_CODE).append(separator_column_field)
+      builder_out.append(OUT_COUNTY_CODE)
       builder_out.append(separator_row_field)
     }
 
