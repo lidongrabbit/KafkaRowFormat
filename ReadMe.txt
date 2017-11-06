@@ -1,4 +1,5 @@
-将kafka输出topic按|拆分为多行
-===================================
-
-
+kafka输出topic按|拆分为多行
+执行mvn clean package编译
+将KafkaRowFormat-1.0.jar上传到ocsp服务器的$home\KafkaRowFormat\lib目录下
+将start-app.sh和common.properties文件上传到$home\KafkaRowFormat目录下
+在KafkaRowFormat目录下执行sh脚本启动spark-submit命令
