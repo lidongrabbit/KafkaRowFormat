@@ -1,6 +1,7 @@
-package com.asiainfo.ocsp.yunnan
+package com.asiainfo.ocsp.shanghai.common
 
-import java.io.File
+import java.io.{File, FileInputStream}
+import java.util.Properties
 
 object CommonConstant {
 
@@ -10,6 +11,6 @@ object CommonConstant {
   val baseDir = (new File(baseDir_decode)).getParent
 
   // common.properties文件放到spark-submit的jvm参数中上传到每个container中，必须是当前相对路径
-  val confFile = new File(baseDir, "./common.properties").getCanonicalPath
+  val confFile = new File(baseDir, "../conf/common.properties").getCanonicalPath
 
 }

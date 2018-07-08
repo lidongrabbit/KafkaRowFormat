@@ -1,8 +1,8 @@
 # KafkaRowFormat
-此项目为云南移动日累计需求：spark streaming按竖线拆分多行。
+此项目为上海批次去重需求：同一批次消费的kafka数据中，相同IMSI、LAC、CI的信令只保留一条，即：根据key(IMSI、LAC、CI)去重，内存中相同key的只保留一条，最终输出到kafka中。
 
 使用步骤：  
 1.idea下载项目，执行mvn clean package编译  
-2.将编译好的KafkaRowFormat-1.0.jar、common.properties配置文件、start-app.sh执行脚本一块上传到OCSP所在服务器，放在如下目录：/home/ocdp/KafkaRowFormat下，KafkaRowFormat-1.0.jar放到该目录的lib下面。  
-3.修改common.properties配置文件，输入输出topic名称等参数。  
-4.在KafkaRowFormat目录下执行sh脚本启动spark-submit命令。  
+2.将编译好的tar包拷贝到服务器，例如目录：/home/ocdp/下并解压。
+3.修改conf目录下common.properties配置文件，输入、输出topic名称等参数。
+4.修改bin目录下start-app.sh中目录、executor等参数，然后执行sh脚本启动spark-submit命令。

@@ -1,8 +1,9 @@
-package com.asiainfo.ocsp.yunnan
+package com.asiainfo.ocsp.shanghai.util
 
 import java.util.Properties
 
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
+
 import scala.collection.mutable
 
 /**
@@ -45,5 +46,6 @@ object KafkaSendTool {
       //props.put("serializer.class", dsConf.get("serializer.class", DEFAULT_SERIALIZER_CLASS))
       new KafkaProducer[String, String](props)
     })
+
 
 }

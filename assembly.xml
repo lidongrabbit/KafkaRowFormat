@@ -28,6 +28,7 @@
           <include>/conf/*</include>
           <include>/bin/*</include>
           <include>/lib/*</include>
+          <include>/logs/*</include>
       </includes>
     </fileSet>
   </fileSets>

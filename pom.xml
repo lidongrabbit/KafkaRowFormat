@@ -207,8 +207,7 @@
                         </executions>
                         <configuration>
                             <excludes>
-                                <exclude>com/asiainfo/ocdp/stream/spark2/**</exclude>
-                                <exclude>com/asiainfo/ocdp/stream/core2_0/**</exclude>
+                                <exclude>com/asiainfo/ocsp/yunnan/**</exclude>
                             </excludes>
                         </configuration>
                     </plugin>
