@@ -5,7 +5,7 @@ shanghai目录下为上海批次去重需求：同一批次消费的kafka数据�
 即：根据key(IMSI、LAC、CI)去重，内存中相同key的只保留一条，最终输出到kafka中。
 
 使用步骤：  
-1.idea下载项目，执行mvn clean package编译  
-2.将编译好的tar包拷贝到服务器，例如目录：/home/ocdp/下并解压。
-3.修改conf目录下common.properties配置文件，输入、输出topic名称等参数。
+1.idea下载项目，执行mvn clean package编译；
+2.将target目录下编译好的tar包和jar包拷贝到服务器，例如目录：/home/ocdp/下并解压，将jar包拷贝到lib目录下；
+3.修改conf目录下common.properties配置文件，输入、输出topic名称等参数；
 4.修改bin目录下start-app.sh中目录、executor等参数，然后执行sh脚本启动spark-submit命令。
