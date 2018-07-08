@@ -1,8 +1,5 @@
 package com.asiainfo.ocsp.shanghai
 
-import java.io.FileInputStream
-import java.util.Properties
-
 import com.asiainfo.ocdp.stream.common.Logging
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.clients.producer.ProducerRecord
@@ -10,17 +7,16 @@ import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
 
-import scala.collection.mutable
 import com.asiainfo.ocsp.shanghai.common._
 import com.asiainfo.ocsp.shanghai.util._
 import org.apache.commons.lang.{StringEscapeUtils, StringUtils}
 
 /**
-  * Created by lidong on 10/29/2017.
+  * Created by lidong on 7/8/2018.
   */
 object StreamApp extends Logging {
 
-  // kafka是否开启kerberos
+
   def main(args: Array[String]) {
 
     if (args.length < 1) {
@@ -73,9 +69,7 @@ object StreamApp extends Logging {
         //输出去重后的rdd到kafka
         distinctRDD.foreachPartition(partition => {
           partition.foreach(map => {
-
             KafkaSendTool.sendMessage(new ProducerRecord[String, String](appConf.topic_name_out, map._1, map._2.toString), appConf.broker_list)
-
           })
         })
 
