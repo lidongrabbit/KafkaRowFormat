@@ -69,7 +69,7 @@ object StreamApp extends Logging {
         //输出去重后的rdd到kafka
         distinctRDD.foreachPartition(partition => {
           partition.foreach(map => {
-            KafkaSendTool.sendMessage(new ProducerRecord[String, String](appConf.topic_name_out, map._1, map._2.toString), appConf.broker_list)
+            KafkaSendTool.sendMessage(new ProducerRecord[String, String](appConf.topic_name_out, map._1, map._2.toString), appConf.broker_list, appConf.kafka_kerberos_enable)
           })
         })
 

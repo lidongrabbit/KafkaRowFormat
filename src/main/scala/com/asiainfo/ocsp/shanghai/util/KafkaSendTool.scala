@@ -2,6 +2,7 @@ package com.asiainfo.ocsp.shanghai.util
 
 import java.util.Properties
 
+import com.asiainfo.ocsp.shanghai.common.AppConf
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 
 import scala.collection.mutable
@@ -17,10 +18,10 @@ object KafkaSendTool {
   val dsid2ProducerMap = mutable.Map[String, KafkaProducer[String, String]]()
 
   // 多线程、多producer,分包发送
-  def sendMessage(message: List[ProducerRecord[String, String]], broker_list: String) = {
+  def sendMessage(message: List[ProducerRecord[String, String]], broker_list: String, kerberos_enable: Boolean) = {
     val msgList: Iterator[List[ProducerRecord[String, String]]] = message.sliding(200, 200)
     if (msgList.size > 0) {
-      val producer: KafkaProducer[String, String] = getProducer(broker_list)
+      val producer: KafkaProducer[String, String] = getProducer(broker_list, kerberos_enable)
       message.sliding(200, 200).foreach((list: List[ProducerRecord[String, String]]) => {
         list.foreach((record: ProducerRecord[String, String]) => {
           producer.send(record)
@@ -30,19 +31,21 @@ object KafkaSendTool {
   }
 
   // 一条条发送
-  def sendMessage(message: ProducerRecord[String, String], broker_list: String) = {
-    val producer: KafkaProducer[String, String] = getProducer(broker_list)
+  def sendMessage(message: ProducerRecord[String, String], broker_list: String, kerberos_enable: Boolean) = {
+    val producer: KafkaProducer[String, String] = getProducer(broker_list,kerberos_enable)
     producer.send(message)
   }
 
   // 对应的producer若不存在，则创建新的producer，并存入dsid2ProducerMap
-  private def getProducer(broker_list: String): KafkaProducer[String, String] =
+  private def getProducer(broker_list: String,kerberos_enable:Boolean): KafkaProducer[String, String] =
     dsid2ProducerMap.getOrElseUpdate("datasource1", {
       val props = new Properties()
       props.put("bootstrap.servers", broker_list)
       props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
       props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
-      props.put("security.protocol", "SASL_PLAINTEXT")
+
+      val mProtocol = if (kerberos_enable) "SASL_PLAINTEXT" else "PLAINTEXT"
+      props.put("security.protocol", mProtocol)
       //props.put("serializer.class", dsConf.get("serializer.class", DEFAULT_SERIALIZER_CLASS))
       new KafkaProducer[String, String](props)
     })
